@@ -57,7 +57,7 @@ struct BooksView<ViewModel>: View where ViewModel: BooksViewModelable {
             LazyVGrid(columns: columns) {
                 ForEach(books) { book in
                     NavigationLink {
-                        BookDetailView(book: book)
+                        BookDetailFactory.create(book: book)
                     } label: {
                         BookCellView(book: book)
                     }

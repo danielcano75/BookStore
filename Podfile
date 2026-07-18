@@ -6,6 +6,7 @@ target 'BookStore' do
   use_frameworks!
   
   pod 'Networking', '~> 1.0'
+  pod 'DataStorage', '~> 1.0'
 end
 
 post_install do |installer|

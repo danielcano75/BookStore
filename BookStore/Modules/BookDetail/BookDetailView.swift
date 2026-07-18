@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct BookDetailView: View {
+struct BookDetailView<ViewModel>: View where ViewModel: BookDetailViewModelable {
+    @ObservedObject var viewModel: ViewModel
     var book: BookModel
     
     var body: some View {
@@ -72,13 +73,22 @@ struct BookDetailView: View {
             }
             .ignoresSafeArea()
         }
+        .onAppear {
+            viewModel.validateFavorite(model: book)
+        }
         .font(.titleRegular)
         .navigationTitle(book.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem {
-                Button(action: {}) {
-                    Image(systemName: "heart")
+                Button(action: {
+                    viewModel.toggleFavorite(model: book)
+                }) {
+                    if viewModel.isFavorite {
+                        Image(systemName: "heart.fill")
+                    } else {
+                        Image(systemName: "heart")
+                    }
                 }
             }
             ToolbarItem {
@@ -92,6 +102,6 @@ struct BookDetailView: View {
 
 #Preview {
     NavigationStack {
-        BookDetailView(book: .preview())
+        BookDetailFactory.create(book: .preview())
     }
 }
