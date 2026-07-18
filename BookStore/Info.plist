@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UILaunchStoryboardName</key>
+	<string>Launch Screen</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>NewYork.otf</string>
+		<string>NewYorkItalic.otf</string>
+		<string>NewYorkLarge-Bold.otf</string>
+		<string>NewYorkMedium-Heavy.otf</string>
+		<string>NewYorkMedium-Medium.otf</string>
+		<string>NewYorkMedium-Semibold.otf</string>
+	</array>
+</dict>
+</plist>
