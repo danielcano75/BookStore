@@ -17,6 +17,7 @@ struct BookStoreApp: App {
     var body: some Scene {
         WindowGroup {
             BooksFactory.create()
+                .preferredColorScheme(.light)
         }
     }
 }
