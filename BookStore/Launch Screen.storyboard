@@ -16,16 +16,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="QuG-WP-mZc">
-                                <rect key="frame" x="0.0" y="66" width="393" height="563"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="QuG-WP-mZc">
+                                <rect key="frame" x="40" y="0.0" width="313" height="812"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" name="Primary"/>
                         <constraints>
-                            <constraint firstItem="QuG-WP-mZc" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="9ZX-Fr-XDK"/>
-                            <constraint firstItem="QuG-WP-mZc" firstAttribute="trailing" secondItem="Bcu-3y-fUS" secondAttribute="trailing" id="HPb-TJ-FuV"/>
-                            <constraint firstItem="QuG-WP-mZc" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="66" id="wP7-fL-bYO"/>
+                            <constraint firstAttribute="trailing" secondItem="QuG-WP-mZc" secondAttribute="trailing" constant="40" id="1fJ-dv-x29"/>
+                            <constraint firstItem="QuG-WP-mZc" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="40" id="Bzb-qV-fdF"/>
+                            <constraint firstItem="QuG-WP-mZc" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="hQU-Yr-b9P"/>
+                            <constraint firstItem="QuG-WP-mZc" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="uqi-Vn-77e"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -35,7 +36,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Logo" width="845" height="563"/>
+        <image name="Logo" width="588" height="812"/>
         <namedColor name="Primary">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

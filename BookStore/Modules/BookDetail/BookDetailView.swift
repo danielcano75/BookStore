@@ -74,7 +74,8 @@ struct BookDetailView<ViewModel>: View where ViewModel: BookDetailViewModelable 
             .ignoresSafeArea()
         }
         .onAppear {
-            viewModel.validateFavorite(model: book)
+            viewModel.validate(favorite: book)
+            viewModel.validate(cart: book)
         }
         .font(.titleRegular)
         .navigationTitle(book.title)
@@ -82,7 +83,7 @@ struct BookDetailView<ViewModel>: View where ViewModel: BookDetailViewModelable 
         .toolbar {
             ToolbarItem {
                 Button(action: {
-                    viewModel.toggleFavorite(model: book)
+                    viewModel.toggle(favorite: book)
                 }) {
                     if viewModel.isFavorite {
                         Image(systemName: "heart.fill")
@@ -92,8 +93,18 @@ struct BookDetailView<ViewModel>: View where ViewModel: BookDetailViewModelable 
                 }
             }
             ToolbarItem {
-                Button(action: {}) {
-                    Image(systemName: "cart.badge.plus")
+                Button(action: {
+                    viewModel.toggle(cart: book)
+                }) {
+                    if viewModel.inShoppingCart {
+                        Image(systemName: "cart.fill")
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(.green)
+                    } else {
+                        Image(systemName: "cart.badge.plus")
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(.blue, .primary)
+                    }
                 }
             }
         }

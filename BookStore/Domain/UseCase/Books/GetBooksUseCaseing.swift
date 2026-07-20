@@ -9,5 +9,5 @@ import Foundation
 
 protocol GetBooksUseCaseing {
     func setup(service: BooksServiceProtocol)
-    func execute() async throws -> [BookModel]
+    func execute(page: Int?, search: String?) async throws -> BooksModel
 }

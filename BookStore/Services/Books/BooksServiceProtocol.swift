@@ -8,5 +8,5 @@
 import Foundation
 
 protocol BooksServiceProtocol {
-    func execute() async throws -> BooksModel
+    func execute(endpoint: BooksEndpoint) async throws -> BooksModel
 }

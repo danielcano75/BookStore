@@ -9,6 +9,10 @@ import SwiftUI
 
 protocol BooksViewModelable: ObservableObject {
     var state: BooksState { get set }
+    var booksLoading: [BookModel] { get set }
     
-    func fetch()
+    @MainActor func fetch()
+    @MainActor func loadMoreIfNeeded(current book: BookModel)
+    @MainActor func search(text: String)
+    @MainActor func searchClosed()
 }

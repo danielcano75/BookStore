@@ -1,13 +1,13 @@
 //
-//  DeleteFavoriteUseCase.swift
+//  DeleteCartUseCase.swift
 //  BookStore
 //
-//  Created by Daniel Cano on 7/18/26.
+//  Created by Daniel Cano on 7/20/26.
 //
 
 import Foundation
 
-final class DeleteFavoriteUseCase: DeleteFavoriteUseCaseing {
+final class DeleteCartUseCase: DeleteCartUseCaseing {
     private var repository: BooksRepositoryProtocol
     
     init(repository: BooksRepositoryProtocol) {
@@ -16,7 +16,7 @@ final class DeleteFavoriteUseCase: DeleteFavoriteUseCaseing {
     
     func execute(model: BookModel) throws {
         let entity = BookModelToEntityConversor.toEntity(model: model)
-        entity.isFavorite = false
-        try repository.delete(favorite: entity)
+        entity.inShoppingCart = false
+        try repository.delete(cart: entity)
     }
 }

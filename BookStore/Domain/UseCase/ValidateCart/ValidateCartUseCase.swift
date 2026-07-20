@@ -1,22 +1,21 @@
 //
-//  DeleteFavoriteUseCase.swift
+//  ValidateCartUseCase.swift
 //  BookStore
 //
-//  Created by Daniel Cano on 7/18/26.
+//  Created by Daniel Cano on 7/20/26.
 //
 
 import Foundation
 
-final class DeleteFavoriteUseCase: DeleteFavoriteUseCaseing {
+final class ValidateCartUseCase: ValidateCartUseCaseing {
     private var repository: BooksRepositoryProtocol
     
     init(repository: BooksRepositoryProtocol) {
         self.repository = repository
     }
     
-    func execute(model: BookModel) throws {
+    func execute(model: BookModel) throws -> Bool {
         let entity = BookModelToEntityConversor.toEntity(model: model)
-        entity.isFavorite = false
-        try repository.delete(favorite: entity)
+        return try repository.inShoppingCart(entity: entity)
     }
 }

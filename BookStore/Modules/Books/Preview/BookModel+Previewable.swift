@@ -9,9 +9,9 @@ import Foundation
 
 // MARK: - Peviewable
 extension BookModel {
-    static func preview() -> Self {
+    static func preview(id: Int = 2701) -> Self {
         BookModel(
-            id: 2701,
+            id: id,
             title: "Moby Dick; Or, The Whale",
             authors: [
                 Person(

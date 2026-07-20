@@ -14,13 +14,13 @@ class GetBooksUseCase: GetBooksUseCaseing {
         self.service = service
     }
     
-    func execute() async throws -> [BookModel] {
+    func execute(page: Int?, search: String?) async throws -> BooksModel {
         guard let service else {
             throw GetBooksUseErrors.service
         }
-        
-        let books = try await service.execute()
-        return books.results
+        let endpoint = BooksEndpoint(page: page, search: search)
+        let books = try await service.execute(endpoint: endpoint)
+        return books
     }
 }
 

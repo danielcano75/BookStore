@@ -18,6 +18,8 @@ enum BookEntityToModelConversor {
         BookModel(
             id: entity.id,
             title: entity.title,
+            price: entity.price,
+            currency: entity.currency,
             authors: [
                 Person(name: entity.author, birthYear: nil, deathYear: nil)
             ],

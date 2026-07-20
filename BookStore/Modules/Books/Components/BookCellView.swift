@@ -13,20 +13,22 @@ struct BookCellView: View {
     var body: some View {
         VStack {
             ZStack {
-                if let image = book.formats.image, let url = URL(string: image) {
-                    AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(height: 150)
-                    } placeholder: {
-                        HStack {
-                            Spacer()
-                            ProgressView().progressViewStyle(.circular)
-                            Spacer()
+                if let image = book.formats.image,
+                   let url = URL(string: image) {
+                    AsyncImage(
+                        url: url,
+                        transaction: Transaction(animation: .bouncy)
+                    ) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                        default:
+                            Image("BookHolder")
+                                .resizable()
+                                .padding()
                         }
                     }
-                    .animation(.bouncy)
                     .cornerRadius(22)
                 }
             }

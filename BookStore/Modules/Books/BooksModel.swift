@@ -14,6 +14,15 @@ enum BooksState {
     case error(String)
 }
 
+enum BooksSheet: Int, Identifiable {
+    case favorites = 1
+    case shpppingCart = 2
+    
+    var id: Int {
+        rawValue
+    }
+}
+
 // MARK: - Root
 struct BooksModel: Decodable, Sendable {
     let count: Int
@@ -27,8 +36,8 @@ struct BooksModel: Decodable, Sendable {
 struct BookModel: Decodable, Sendable, Identifiable {
     let id: Int
     let title: String
-    let price = Double.random(in: 4.99...39.99)
-    let currency = "USD"
+    var price = Double.random(in: 4.99...39.99)
+    var currency = "USD"
     let authors: [Person]
     let summaries: [String]
     let editors: [Person]

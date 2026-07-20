@@ -9,6 +9,9 @@ import Foundation
 import Networking
 
 struct BooksEndpoint: Endpoint {
+    let page: Int?
+    let search: String?
+    
     var path: String {
         "/books"
     }
@@ -22,7 +25,21 @@ struct BooksEndpoint: Endpoint {
     }
     
     var queryItems: [URLQueryItem]? {
-        nil
+        var items: [URLQueryItem] = []
+        
+        if let page, page > 0 {
+            items.append(
+                .init(name: "page", value: "\(page)")
+            )
+        }
+        
+        if let search, !search.isEmpty {
+            items.append(
+                .init(name: "search", value: search)
+            )
+        }
+        
+        return items
     }
     
     var body: Data? {

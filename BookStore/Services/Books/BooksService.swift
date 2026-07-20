@@ -12,13 +12,12 @@ class BooksService: BooksServiceProtocol {
     private var networking: APIClientProtocol
     
     init() {
-        let url = URL(string: "https://gutendex.com")!
+        let url = URL(string: Constants.baseURL)!
         let configuration = NetworkConfiguration(baseURL: url)
         self.networking = NetworkFactory.create(with: configuration)
     }
     
-    func execute() async throws -> BooksModel {
-        let endpoint = BooksEndpoint()
+    func execute(endpoint: BooksEndpoint) async throws -> BooksModel {
         let response = try await networking.execute(endpoint, as: BooksModel.self)
         return response.value
     }
