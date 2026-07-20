@@ -57,6 +57,9 @@ struct BooksView<ViewModel>: View where ViewModel: BooksViewModelable {
                     ShoppingCartFactory.create()
                 }
             }
+            .onAppear {
+                viewModel.shoppingCartBooks()
+            }
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer)
         .onChange(of: searchText) { _, text in
@@ -77,7 +80,9 @@ struct BooksView<ViewModel>: View where ViewModel: BooksViewModelable {
         Button(action: {
             sheet = .favorites
         }) {
-            Image(systemName: "heart.text.clipboard")
+            Image(systemName: "list.star")
+                .symbolRenderingMode(.palette)
+                .foregroundStyle(.yellow, .primary)
         }
     }
     
@@ -85,7 +90,7 @@ struct BooksView<ViewModel>: View where ViewModel: BooksViewModelable {
         Button(action: {
             sheet = .shpppingCart
         }) {
-            Image(systemName: "cart.fill")
+            CartBadgeView(count: $viewModel.shoppingCartBooksCount)
         }
     }
     

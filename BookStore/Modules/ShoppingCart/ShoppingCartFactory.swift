@@ -19,7 +19,7 @@ enum ShoppingCartFactory {
             )
             return AnyView(ShoppingCartView(viewModel: viewModel))
         } catch {
-            return AnyView(EmptyBookView(title: "No hay libros en el carrito", message: ""))
+            return AnyView(EmptyBookView(title: "There are no books in the cart.", message: ""))
         }
     }
 }

@@ -9,6 +9,7 @@ import Combine
 
 class BooksViewModelPreviewable: BooksViewModelable {
     var state: BooksState = .idle
+    var shoppingCartBooksCount: Int = 0
     var booksLoading: [BookModel] = []
     
     func fetch() {
@@ -25,5 +26,9 @@ class BooksViewModelPreviewable: BooksViewModelable {
     
     func searchClosed() {
         debugPrint("search closed")
+    }
+    
+    func shoppingCartBooks() {
+        debugPrint("Shopping Cart Books")
     }
 }

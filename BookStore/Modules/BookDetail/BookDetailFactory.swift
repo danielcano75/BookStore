@@ -28,7 +28,7 @@ enum BookDetailFactory {
             )
             return AnyView(BookDetailView(viewModel: viewModel, book: book))
         } catch {
-            return AnyView(EmptyBookView(title: "Sucedido algo al cargar el detalle", message: ""))
+            return AnyView(EmptyBookView(title: "Something happened while loading the details", message: ""))
         }
     }
 }

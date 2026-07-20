@@ -16,7 +16,7 @@ enum FavoritesFactory {
             let viewModel = FavoritesViewModel(getFavoriteBooksUsecase: getFavoriteBooks, deleteFavoriteUsecase: deleteFavorite)
             return AnyView(FavoritesView(viewModel: viewModel))
         } catch {
-            return AnyView(EmptyBookView(title: "No hay favoritos", message: ""))
+            return AnyView(EmptyBookView(title: "There are no favorites.", message: ""))
         }
     }
 }

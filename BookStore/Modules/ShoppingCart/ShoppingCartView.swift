@@ -21,10 +21,10 @@ struct ShoppingCartView<ViewModel>: View where ViewModel: ShoppingCartViewModela
                 case .success(let books):
                     listShoppingCartOrEmpty(books)
                 case .error(let message):
-                    EmptyBookView(title: "No hay favoritos", message: message)
+                    EmptyBookView(title: "There are no books.", message: message)
                 }
             }
-            .navigationTitle("Carrito")
+            .navigationTitle("Shopping cart")
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
                 ToolbarItem {
@@ -52,8 +52,8 @@ struct ShoppingCartView<ViewModel>: View where ViewModel: ShoppingCartViewModela
         if books.isEmpty {
             return AnyView(
                 EmptyBookView(
-                    title: "No hay libros en el carrito",
-                    message: "Intenta agregar libros a tu carrito de compras."
+                    title: "There are no books in the cart.",
+                    message: "Try adding books to your shopping cart."
                 )
             )
         }

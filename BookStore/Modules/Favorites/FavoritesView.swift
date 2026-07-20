@@ -21,7 +21,7 @@ struct FavoritesView<ViewModel>: View where ViewModel: FavoritesViewModelable {
                 case .success(let books):
                     listFavoritesOrEmpty(books)
                 case .error(let message):
-                    EmptyBookView(title: "No hay favoritos", message: message)
+                    EmptyBookView(title: "There is no favorite.", message: message)
                 }
             }
             .navigationTitle("Favorites")
@@ -74,8 +74,8 @@ struct FavoritesView<ViewModel>: View where ViewModel: FavoritesViewModelable {
         if books.isEmpty {
             return AnyView(
                 EmptyBookView(
-                    title: "No hay favoritos",
-                    message: "Intenta agregar libros a tu listado de favoritos."
+                    title: "There are no favorites.",
+                    message: "Try adding books to your favorites list."
                 )
             )
         }

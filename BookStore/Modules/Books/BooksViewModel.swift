@@ -10,16 +10,20 @@ import Combine
 
 final class BooksViewModel: BooksViewModelable {
     @Published var state: BooksState = .idle
+    @Published var shoppingCartBooksCount: Int = 0
     private var books: [BookModel] = []
     private var page = 1
     private var hasMorePages = true
     @Published var booksLoading: [BookModel] = [ .preview(id: 1), .preview(id: 2), .preview(id: 3), .preview(id: 4), .preview(id: 5), .preview(id: 6) ]
     
     private let debouncer = SearchDebouncer()
-    private var usecase: GetBooksUseCaseing
+    private var getBooksUsecase: GetBooksUseCaseing
+    private var getCartBooksUsecase: GetCartBooksUseCaseing
     
-    init(usecase: GetBooksUseCaseing) {
-        self.usecase = usecase
+    init(getBooksUsecase: GetBooksUseCaseing,
+         getCartBooksUsecase: GetCartBooksUseCaseing) {
+        self.getBooksUsecase = getBooksUsecase
+        self.getCartBooksUsecase = getCartBooksUsecase
     }
 }
 
@@ -28,7 +32,7 @@ extension BooksViewModel {
     func fetch() {
         Task {
             do {
-                let response = try await usecase.execute(page: page, search: nil)
+                let response = try await getBooksUsecase.execute(page: page, search: nil)
                 
                 books.append(contentsOf: response.results)
                 
@@ -80,7 +84,7 @@ extension BooksViewModel {
     }
     
     private func searchBooks(_ text: String) async throws {
-        let response = try await usecase.execute(page: nil, search: text)
+        let response = try await getBooksUsecase.execute(page: nil, search: text)
 
         books = response.results
         state = .success(books)
@@ -88,10 +92,18 @@ extension BooksViewModel {
     
     @MainActor
     func searchClosed() {
-        
         books = []
         page = 1
         hasMorePages = true
         fetch()
+    }
+    
+    func shoppingCartBooks() {
+        do {
+            let books = try getCartBooksUsecase.execute()
+            shoppingCartBooksCount = books.count
+        } catch {
+            state = .error(error.localizedDescription)
+        }
     }
 }
