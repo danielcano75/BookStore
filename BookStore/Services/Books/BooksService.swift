@@ -14,7 +14,13 @@ enum BooksServiceErrors: Error {
 
 final class BooksService: BooksServiceProtocol {
     static let shared = BooksService()
-    
+
+    internal init() {}
+
+    internal init(networking: APIClientProtocol) {
+        self.networking = networking
+    }
+
     private var networking: APIClientProtocol?
     
     func setup(base url: URL) {

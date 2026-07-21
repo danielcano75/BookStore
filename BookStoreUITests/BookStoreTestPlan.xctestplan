@@ -1,0 +1,31 @@
+{
+  "configurations" : [
+    {
+      "id" : "39540F06-4787-4F5F-B6D3-BE7598B01971",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:BookStore.xcodeproj",
+        "identifier" : "29466854300AD3CA00567AA2",
+        "name" : "BookStoreTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:BookStore.xcodeproj",
+        "identifier" : "2946685E300AD3CA00567AA2",
+        "name" : "BookStoreUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

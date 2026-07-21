@@ -4,9 +4,15 @@ platform :ios, '17.0'
 
 target 'BookStore' do
   use_frameworks!
-  
+
   pod 'Networking', '~> 1.0'
   pod 'DataStorage', '~> 1.0'
+
+  target 'BookStoreTests' do
+    inherit! :search_paths
+    pod 'Networking', '~> 1.0'
+    pod 'DataStorage', '~> 1.0'
+  end
 end
 
 post_install do |installer|
