@@ -1,0 +1,27 @@
+# frozen_string_literal: true
+
+opt_out_usage
+
+default_platform(:ios)
+
+platform :ios do
+
+  # ── Tests ────────────────────────────────────────────────────────────────────
+
+  desc "Run all unit tests and generate coverage report"
+  lane :test do
+    run_tests(
+      workspace: "BookStore.xcworkspace",
+      scheme: "BookStore",
+      testplan: "BookStoreTestPlan",
+      device: "iPhone 17",
+      skip_testing: "BookStoreUITests",
+      clean: true,
+      code_coverage: true,
+      output_directory: "fastlane/test_output",
+      output_types: "html,junit",
+      result_bundle: true,
+      xcodebuild_formatter: "xcbeautify"
+    )
+  end
+end

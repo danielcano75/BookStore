@@ -17,6 +17,13 @@ enum BooksRepositoryErrors: Error {
 final class BooksRepository: BooksRepositoryProtocol {
     static let shared = BooksRepository()
 
+    private init() {}
+
+    internal init(storage: StorageRepositoryProtocol, service: BooksServiceProtocol) {
+        self.storage = storage
+        self.service = service
+    }
+
     private var storage: StorageRepositoryProtocol?
     private var service: BooksServiceProtocol?
 
