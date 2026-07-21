@@ -8,12 +8,13 @@
 import Foundation
 
 protocol BooksRepositoryProtocol {
-    func getFavorites() throws -> [BookEntity]
-    func getShoppingCart() throws -> [BookEntity]
-    func add(favorite entity: BookEntity) throws
-    func delete(favorite entity: BookEntity) throws
-    func add(cart entity: BookEntity) throws
-    func delete(cart entity: BookEntity) throws
-    func isFavorite(entity: BookEntity) throws -> Bool
-    func inShoppingCart(entity: BookEntity) throws -> Bool
+    func fetchBooks(page: Int?, search: String?) async throws -> BooksModel
+    func getFavorites() throws -> [BookModel]
+    func getShoppingCart() throws -> [BookModel]
+    func add(favorite model: BookModel) throws
+    func delete(favorite model: BookModel) throws
+    func add(cart model: BookModel) throws
+    func delete(cart model: BookModel) throws
+    func isFavorite(model: BookModel) throws -> Bool
+    func inShoppingCart(model: BookModel) throws -> Bool
 }

@@ -15,8 +15,6 @@ final class GetCartBooksUseCase: GetCartBooksUseCaseing {
     }
     
     func execute() throws -> [BookModel] {
-        let entities = try repository.getShoppingCart()
-        let books = BookEntityToModelConversor.toModels(entities: entities)
-        return books
+        return try repository.getShoppingCart()
     }
 }

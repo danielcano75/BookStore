@@ -11,96 +11,103 @@ import SwiftData
 
 enum BooksRepositoryErrors: Error {
     case missingSetupStorage
+    case missingSetupService
 }
 
 final class BooksRepository: BooksRepositoryProtocol {
     static let shared = BooksRepository()
-    
+
     private var storage: StorageRepositoryProtocol?
-    
-    func setup(schema: Schema) throws {
-        let configuration = StorageConfiguration(schema: schema) 
+    private var service: BooksServiceProtocol?
+
+    func setup(schema: Schema, service: BooksServiceProtocol) throws {
+        let configuration = StorageConfiguration(schema: schema)
         self.storage = try StorageFactory.create(with: configuration)
+        self.service = service
     }
-    
-    func getStoage() throws ->  StorageRepositoryProtocol {
-        guard let storage else {
-            throw BooksRepositoryErrors.missingSetupStorage
-        }
+
+    private func getStorage() throws -> StorageRepositoryProtocol {
+        guard let storage else { throw BooksRepositoryErrors.missingSetupStorage }
         return storage
     }
-    
-    func getFavorites() throws -> [BookEntity] {
-        let storage = try getStoage()
-        let books = try storage.fetch(BookEntity.self).filter({ $0.isFavorite })
-        return books
+
+    private func getService() throws -> BooksServiceProtocol {
+        guard let service else { throw BooksRepositoryErrors.missingSetupService }
+        return service
     }
-    
-    func getShoppingCart() throws -> [BookEntity] {
-        let storage = try getStoage()
-        let books = try storage.fetch(BookEntity.self).filter({ $0.inShoppingCart })
-        return books
+
+    func fetchBooks(page: Int?, search: String?) async throws -> BooksModel {
+        return try await getService().fetchBooks(page: page, search: search)
     }
-    
-    func add(favorite entity: BookEntity) throws {
-        let storage = try getStoage()
-        if let book = try storage.fetch(BookEntity.self).first(where: { $0.id == entity.id }) {
-            book.isFavorite = entity.isFavorite
+
+    func getFavorites() throws -> [BookModel] {
+        let storage = try getStorage()
+        return try storage.fetch(BookEntity.self)
+            .filter { $0.isFavorite }
+            .map { BookEntityToModelConversor.toModel(entity: $0) }
+    }
+
+    func getShoppingCart() throws -> [BookModel] {
+        let storage = try getStorage()
+        return try storage.fetch(BookEntity.self)
+            .filter { $0.inShoppingCart }
+            .map { BookEntityToModelConversor.toModel(entity: $0) }
+    }
+
+    func add(favorite model: BookModel) throws {
+        let storage = try getStorage()
+        if let existing = try storage.fetch(BookEntity.self).first(where: { $0.id == model.id }) {
+            existing.isFavorite = true
             try storage.update()
             return
         }
+        let entity = BookModelToEntityConversor.toEntity(model: model)
+        entity.isFavorite = true
         try storage.insert(entity)
     }
 
-    func delete(favorite entity: BookEntity) throws {
-        let storage = try getStoage()
-        if let book = try storage.fetch(BookEntity.self).first(where: { $0.id == entity.id }) {
-            book.isFavorite = entity.isFavorite
+    func delete(favorite model: BookModel) throws {
+        let storage = try getStorage()
+        if let existing = try storage.fetch(BookEntity.self).first(where: { $0.id == model.id }) {
+            existing.isFavorite = false
             try storage.update()
-            try validateDelete(book: book)
+            try validateDelete(book: existing, storage: storage)
         }
     }
-    
-    func add(cart entity: BookEntity) throws {
-        let storage = try getStoage()
-        if let book = try storage.fetch(BookEntity.self).first(where: { $0.id == entity.id }) {
-            book.inShoppingCart = entity.inShoppingCart
+
+    func add(cart model: BookModel) throws {
+        let storage = try getStorage()
+        if let existing = try storage.fetch(BookEntity.self).first(where: { $0.id == model.id }) {
+            existing.inShoppingCart = true
             try storage.update()
             return
         }
+        let entity = BookModelToEntityConversor.toEntity(model: model)
+        entity.inShoppingCart = true
         try storage.insert(entity)
     }
-    
-    func delete(cart entity: BookEntity) throws {
-        let storage = try getStoage()
-        if let book = try storage.fetch(BookEntity.self).first(where: { $0.id == entity.id }) {
-            book.inShoppingCart = entity.inShoppingCart
+
+    func delete(cart model: BookModel) throws {
+        let storage = try getStorage()
+        if let existing = try storage.fetch(BookEntity.self).first(where: { $0.id == model.id }) {
+            existing.inShoppingCart = false
             try storage.update()
-            try validateDelete(book: book)
+            try validateDelete(book: existing, storage: storage)
         }
     }
-    
-    func isFavorite(entity: BookEntity) throws -> Bool {
-        let storage = try getStoage()
-        let books = try storage.fetch(BookEntity.self)
-        let isFavorite = books.contains { book in
-            book.id == entity.id && book.isFavorite
-        }
-        return isFavorite
+
+    func isFavorite(model: BookModel) throws -> Bool {
+        let storage = try getStorage()
+        return try storage.fetch(BookEntity.self).contains { $0.id == model.id && $0.isFavorite }
     }
-    
-    func inShoppingCart(entity: BookEntity) throws -> Bool {
-        let storage = try getStoage()
-        let books = try storage.fetch(BookEntity.self)
-        let inShoppingCart = books.contains { book in
-            book.id == entity.id && book.inShoppingCart
-        }
-        return inShoppingCart
+
+    func inShoppingCart(model: BookModel) throws -> Bool {
+        let storage = try getStorage()
+        return try storage.fetch(BookEntity.self).contains { $0.id == model.id && $0.inShoppingCart }
     }
-    
-    private func validateDelete(book: BookEntity) throws {
+
+    private func validateDelete(book: BookEntity, storage: StorageRepositoryProtocol) throws {
         if !book.isFavorite && !book.inShoppingCart {
-            let storage = try getStoage()
             try storage.delete(book)
         }
     }

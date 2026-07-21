@@ -15,8 +15,6 @@ final class DeleteFavoriteUseCase: DeleteFavoriteUseCaseing {
     }
     
     func execute(model: BookModel) throws {
-        let entity = BookModelToEntityConversor.toEntity(model: model)
-        entity.isFavorite = false
-        try repository.delete(favorite: entity)
+        try repository.delete(favorite: model)
     }
 }

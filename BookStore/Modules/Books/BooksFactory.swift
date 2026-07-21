@@ -9,9 +9,8 @@ import SwiftUI
 
 enum BooksFactory {
     static func create() -> some View {
-        let service = BooksService.shared
         let repository = BooksRepository.shared
-        let getBooks = GetBooksUseCase(service: service)
+        let getBooks = GetBooksUseCase(repository: repository)
         let getCartBooks = GetCartBooksUseCase(repository: repository)
         let viewModel = BooksViewModel(getBooksUsecase: getBooks, getCartBooksUsecase: getCartBooks)
         return BooksView(viewModel: viewModel)

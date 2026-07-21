@@ -15,8 +15,6 @@ final class GetFavoriteBooksUseCase: GetFavoriteBooksUseCaseing {
     }
     
     func execute() throws -> [BookModel] {
-        let entities = try repository.getFavorites()
-        let books = BookEntityToModelConversor.toModels(entities: entities)
-        return books
+        return try repository.getFavorites()
     }
 }

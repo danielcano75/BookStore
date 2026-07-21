@@ -15,8 +15,6 @@ final class AddFavoriteUseCase: AddFavoriteUseCaseing {
     }
     
     func execute(model: BookModel) throws {
-        let entity = BookModelToEntityConversor.toEntity(model: model)
-        entity.isFavorite = true
-        try repository.add(favorite: entity)
+        try repository.add(favorite: model)
     }
 }

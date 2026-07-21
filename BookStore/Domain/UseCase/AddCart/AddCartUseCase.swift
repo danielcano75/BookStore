@@ -15,8 +15,6 @@ final class AddCartUseCase: AddCartUseCaseing {
     }
     
     func execute(model: BookModel) throws {
-        let entity = BookModelToEntityConversor.toEntity(model: model)
-        entity.inShoppingCart = true
-        try repository.add(cart: entity)
+        try repository.add(cart: model)
     }
 }

@@ -8,15 +8,13 @@
 import Foundation
 
 class GetBooksUseCase: GetBooksUseCaseing {
-    private let service: BooksServiceProtocol
-    
-    init(service: BooksServiceProtocol) {
-        self.service = service
+    private let repository: BooksRepositoryProtocol
+
+    init(repository: BooksRepositoryProtocol) {
+        self.repository = repository
     }
-    
+
     func execute(page: Int?, search: String?) async throws -> BooksModel {
-        let endpoint = BooksEndpoint(page: page, search: search)
-        let books = try await service.execute(endpoint: endpoint)
-        return books
+        return try await repository.fetchBooks(page: page, search: search)
     }
 }

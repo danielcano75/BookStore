@@ -15,7 +15,6 @@ final class ValidateCartUseCase: ValidateCartUseCaseing {
     }
     
     func execute(model: BookModel) throws -> Bool {
-        let entity = BookModelToEntityConversor.toEntity(model: model)
-        return try repository.inShoppingCart(entity: entity)
+        return try repository.inShoppingCart(model: model)
     }
 }

@@ -15,8 +15,6 @@ final class DeleteCartUseCase: DeleteCartUseCaseing {
     }
     
     func execute(model: BookModel) throws {
-        let entity = BookModelToEntityConversor.toEntity(model: model)
-        entity.inShoppingCart = false
-        try repository.delete(cart: entity)
+        try repository.delete(cart: model)
     }
 }

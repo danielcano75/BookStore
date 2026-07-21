@@ -22,15 +22,16 @@ final class BooksService: BooksServiceProtocol {
         self.networking = NetworkFactory.create(with: configuration)
     }
     
-    func getNetworking() throws -> APIClientProtocol {
+    private func getNetworking() throws -> APIClientProtocol {
         guard let networking else {
             throw BooksServiceErrors.missingSetupNetworking
         }
         return networking
     }
-    
-    func execute(endpoint: BooksEndpoint) async throws -> BooksModel {
+
+    func fetchBooks(page: Int?, search: String?) async throws -> BooksModel {
         let networking = try getNetworking()
+        let endpoint = BooksEndpoint(page: page, search: search)
         let response = try await networking.execute(endpoint, as: BooksModel.self)
         return response.value
     }

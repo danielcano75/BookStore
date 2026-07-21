@@ -15,7 +15,6 @@ final class ValidateFavoriteUseCase: ValidateFavoriteUseCaseing {
     }
     
     func execute(model: BookModel) throws -> Bool {
-        let entity = BookModelToEntityConversor.toEntity(model: model)
-        return try repository.isFavorite(entity: entity)
+        return try repository.isFavorite(model: model)
     }
 }
