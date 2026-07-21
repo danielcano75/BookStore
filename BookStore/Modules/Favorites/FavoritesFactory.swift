@@ -8,15 +8,11 @@
 import SwiftUI
 
 enum FavoritesFactory {
-    static func create() -> AnyView {
-        do {
-            let repository = try BooksRepository()
-            let getFavoriteBooks = GetFavoriteBooksUseCase(repository: repository)
-            let deleteFavorite = DeleteFavoriteUseCase(repository: repository)
-            let viewModel = FavoritesViewModel(getFavoriteBooksUsecase: getFavoriteBooks, deleteFavoriteUsecase: deleteFavorite)
-            return AnyView(FavoritesView(viewModel: viewModel))
-        } catch {
-            return AnyView(EmptyBookView(title: "There are no favorites.", message: ""))
-        }
+    static func create() -> some View {
+        let repository = BooksRepository.shared
+        let getFavoriteBooks = GetFavoriteBooksUseCase(repository: repository)
+        let deleteFavorite = DeleteFavoriteUseCase(repository: repository)
+        let viewModel = FavoritesViewModel(getFavoriteBooksUsecase: getFavoriteBooks, deleteFavoriteUsecase: deleteFavorite)
+        return FavoritesView(viewModel: viewModel)
     }
 }

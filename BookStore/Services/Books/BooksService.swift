@@ -8,16 +8,29 @@
 import Foundation
 import Networking
 
-class BooksService: BooksServiceProtocol {
-    private var networking: APIClientProtocol
+enum BooksServiceErrors: Error {
+    case missingSetupNetworking
+}
+
+final class BooksService: BooksServiceProtocol {
+    static let shared = BooksService()
     
-    init() {
-        let url = URL(string: Constants.baseURL)!
+    private var networking: APIClientProtocol?
+    
+    func setup(base url: URL) {
         let configuration = NetworkConfiguration(baseURL: url)
         self.networking = NetworkFactory.create(with: configuration)
     }
     
+    func getNetworking() throws -> APIClientProtocol {
+        guard let networking else {
+            throw BooksServiceErrors.missingSetupNetworking
+        }
+        return networking
+    }
+    
     func execute(endpoint: BooksEndpoint) async throws -> BooksModel {
+        let networking = try getNetworking()
         let response = try await networking.execute(endpoint, as: BooksModel.self)
         return response.value
     }

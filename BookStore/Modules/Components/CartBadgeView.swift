@@ -19,7 +19,7 @@ struct CartBadgeView: View {
                         Spacer()
                         Image(systemName: "\(count).circle.fill")
                             .foregroundStyle(.red)
-                            .font(.custom(Font.Weight.regular.weight, size: 9))
+                            .font(.custom(Font.Weight.medium.weight, size: 12))
                             .background(
                                 Circle().foregroundStyle(DesignSystem.Colors.primary)
                             )

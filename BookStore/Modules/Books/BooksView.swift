@@ -32,9 +32,12 @@ struct BooksView<ViewModel>: View where ViewModel: BooksViewModelable {
                         .redacted(reason: .placeholder)
                         .shimmer()
                 case .success(let books):
-                    contentBooks(books)
+                    contentEmptyOrBooks(books)
                 case .error(let message):
-                    Text(message)
+                    EmptyBookView(
+                        title: "No Books Found",
+                        message: message
+                    )
                 }
             }
             .navigationTitle("Books")
@@ -92,6 +95,18 @@ struct BooksView<ViewModel>: View where ViewModel: BooksViewModelable {
         }) {
             CartBadgeView(count: $viewModel.shoppingCartBooksCount)
         }
+    }
+    
+    private func contentEmptyOrBooks(_ books: [BookModel]) -> AnyView {
+        if books.isEmpty {
+            return AnyView(
+                EmptyBookView(
+                    title: "No Books Found",
+                    message: "We couldn't find any books matching your search. Try different keywords or browse our collection."
+                )
+            )
+        }
+        return AnyView(contentBooks(books))
     }
     
     private func contentBooks(_ books: [BookModel]) -> some View {

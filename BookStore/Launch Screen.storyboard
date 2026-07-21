@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="QuG-WP-mZc">
-                                <rect key="frame" x="40" y="0.0" width="313" height="812"/>
+                                <rect key="frame" x="40" y="0.0" width="313" height="823"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
@@ -36,7 +36,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Logo" width="588" height="812"/>
+        <image name="Logo" width="596" height="823"/>
         <namedColor name="Primary">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -9,17 +9,13 @@ import SwiftUI
 
 enum ShoppingCartFactory {
     static func create() -> some View {
-        do {
-            let repository = try BooksRepository()
-            let getCartBooks = GetCartBooksUseCase(repository: repository)
-            let deleteCart = DeleteCartUseCase(repository: repository)
-            let viewModel = ShoppingCartViewModel(
-                getCartBooksUsecase: getCartBooks,
-                deleteCartUsecase: deleteCart
-            )
-            return AnyView(ShoppingCartView(viewModel: viewModel))
-        } catch {
-            return AnyView(EmptyBookView(title: "There are no books in the cart.", message: ""))
-        }
+        let repository = BooksRepository.shared
+        let getCartBooks = GetCartBooksUseCase(repository: repository)
+        let deleteCart = DeleteCartUseCase(repository: repository)
+        let viewModel = ShoppingCartViewModel(
+            getCartBooksUsecase: getCartBooks,
+            deleteCartUsecase: deleteCart
+        )
+        return ShoppingCartView(viewModel: viewModel)
     }
 }

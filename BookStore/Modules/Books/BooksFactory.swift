@@ -8,18 +8,13 @@
 import SwiftUI
 
 enum BooksFactory {
-    static func create() -> AnyView {
-        do {
-            let repository = try BooksRepository()
-            let service = BooksService()
-            let getBooks = GetBooksUseCase()
-            getBooks.setup(service: service)
-            let getCartBooks = GetCartBooksUseCase(repository: repository)
-            let viewModel = BooksViewModel(getBooksUsecase: getBooks, getCartBooksUsecase: getCartBooks)
-            return AnyView(BooksView(viewModel: viewModel))
-        } catch {
-            return AnyView(EmptyBookView(title: "Something happened while loading the Startup", message: ""))
-        }
+    static func create() -> some View {
+        let service = BooksService.shared
+        let repository = BooksRepository.shared
+        let getBooks = GetBooksUseCase(service: service)
+        let getCartBooks = GetCartBooksUseCase(repository: repository)
+        let viewModel = BooksViewModel(getBooksUsecase: getBooks, getCartBooksUsecase: getCartBooks)
+        return BooksView(viewModel: viewModel)
     }
 }
 

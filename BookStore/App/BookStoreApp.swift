@@ -10,14 +10,38 @@ import SwiftData
 
 @main
 struct BookStoreApp: App {
+    @State private var appState: BookStoreState = .idle
+    
     init() {
         NavigationBarStyle.configure()
     }
-
+    
     var body: some Scene {
         WindowGroup {
-            BooksFactory.create()
-                .preferredColorScheme(.light)
+            ZStack {
+                switch appState {
+                case .idle, .configure:
+                    SplashView()
+                case .ready:
+                    BooksFactory.create()
+                case .failure:
+                    WrongConfigurationView()
+                }
+            }
+            .preferredColorScheme(.light)
+            .onAppear {
+                configure()
+            }
+        }
+    }
+    
+    private func configure() {
+        appState = .configure
+        do {
+            try AppConfigurator.configure()
+            appState = .ready
+        } catch {
+            appState = .failure
         }
     }
 }
