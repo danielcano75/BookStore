@@ -30,6 +30,6 @@ final class BookEntity {
         self.summary = summary
         self.image = image
         self.isFavorite = isFavorite
-        self.inShoppingCart = isFavorite
+        self.inShoppingCart = inShoppingCart
     }
 }
